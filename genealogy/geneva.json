@@ -1,0 +1,25 @@
+{
+	"firstname": "Geneva",
+	"middlename": "",
+	"surname": "Denison",
+	
+	"birth": [
+		{ "date": "23 June 1904" },
+		{ "place": "Manti, Sanpete, Utah" }
+	],
+	
+	"death": [
+		{ "date": "13 April 1995" },
+		{ "place": "American Fork, Utah, Utah, United States" }
+	],
+
+	"spouse": [
+		"/ipfs/QmYuiuhSxUpd1AUrpuyi4MGs8qgc5seq8yMo4u7BqTELnD"
+	],
+
+	"parents" : [	],
+
+	"children": [	],
+
+	"notes": "I exist"
+}
