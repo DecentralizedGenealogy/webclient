@@ -23,8 +23,8 @@
 	],
 
 	"children": [
-		{ "https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/luke.json" }
-		],
+ 		"https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/luke.json"
+	],
 
 	"notes": "http://starwars.wikia.com/wiki/Anakin_Skywalker"
 }
