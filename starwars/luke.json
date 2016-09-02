@@ -19,7 +19,7 @@
 
 	"parents" : [
 		{ "father": "https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/anakin.json" },
-		{ "mother": "" }
+		{ "mother": "https://raw.githubusercontent.com/jimmyz/upgraded-octo-waffle/master/padme.json" }
 	],
 
 	"children": [	],
