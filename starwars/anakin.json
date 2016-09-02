@@ -1,0 +1,30 @@
+{
+	"firstname": "Anakin",
+	"middlename": "",
+	"surname": "Skywalker",
+	
+	"birth": [
+		{ "date": "42 years before the Battle of Yavin" },
+		{ "place": "Death Star 2" }
+	],
+	
+	"death": [
+		{ "date": "" },
+		{ "place": "" }
+	],
+
+	"spouse": [
+		""
+	],
+
+	"parents" : [
+		{ "father": "" },
+		{ "mother": "" }
+	],
+
+	"children": [
+		{ "Luke": "https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/luke.json" }
+		],
+
+	"notes": "http://starwars.wikia.com/wiki/Anakin_Skywalker"
+}

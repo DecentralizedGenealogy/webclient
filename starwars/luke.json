@@ -1,0 +1,28 @@
+{
+	"firstname": "Luke",
+	"middlename": "",
+	"surname": "Skywalker",
+	
+	"birth": [
+		{ "date": "19 years before the Battle of Yavin" },
+		{ "place": "Polis Massa" }
+	],
+	
+	"death": [
+		{ "date": "" },
+		{ "place": "" }
+	],
+
+	"spouse": [
+		""
+	],
+
+	"parents" : [
+		{ "father": "https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/anakin.json" },
+		{ "mother": "" }
+	],
+
+	"children": [	],
+
+	"notes": "http://starwars.wikia.com/wiki/Luke_Skywalker"
+}
