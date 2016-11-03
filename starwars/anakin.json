@@ -17,10 +17,7 @@
 		"https://raw.githubusercontent.com/jimmyz/upgraded-octo-waffle/master/padme.json"
 	],
 
-	"parents" : [
-		{ "father": "" },
-		{ "mother": "" }
-	],
+	"parents" : [ ],
 
 	"children": [
  		"https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/luke.json",
