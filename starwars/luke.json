@@ -13,9 +13,7 @@
 		{ "place": "" }
 	],
 
-	"spouse": [
-		""
-	],
+	"spouse": [ ],
 
 	"parents" : [
 		{ "father": "https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/anakin.json" },
