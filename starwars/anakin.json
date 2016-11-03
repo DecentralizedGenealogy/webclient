@@ -3,6 +3,10 @@
 	"middlename": "",
 	"surname": "Skywalker",
 	
+	"portrait": "http://akns-images.eonline.com/eol_images/Entire_Site/2015521/rs_1024x759-150621150125-1024.Jake_Lloyd-Anakin_Skywalkerjmd-062015.jpg",
+	
+	"gender": "male",
+	
 	"birth": [
 		{ "date": "42 years before the Battle of Yavin" },
 		{ "place": "Death Star 2" }

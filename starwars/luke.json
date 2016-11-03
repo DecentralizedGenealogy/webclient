@@ -3,6 +3,10 @@
 	"middlename": "",
 	"surname": "Skywalker",
 	
+	"portrait": "http://www.aceshowbiz.com/images/news/star-wars-the-force-awakens-check-out-the-reasons-why-luke-skywalker-disappears.jpg",
+	
+	"gender": "male",
+	
 	"birth": [
 		{ "date": "19 years before the Battle of Yavin" },
 		{ "place": "Polis Massa" }
