@@ -26,6 +26,7 @@ function getPerson(url) {
   $.get(url, function(rsp) {
     person = JSON.parse(rsp);
     console.log(person);
+    $('.personid').val(person.id);
 
     // Portrait
     if (person.portrait) {
@@ -57,12 +58,12 @@ function getPerson(url) {
     // Parents
     for (var i=0; i<person.parents.length; i++) {
       if (person.parents[i].father) {
-        $('.parents').append('<button data="'+person.parents[0].father+'" class="fetch person-father btn btn-link">Father</button>');        
+        $('.parents').append('<button data="'+person.parents[i].father+'" class="fetch person-father btn btn-link">Father</button>');        
         graph.nodes.push({ "id": "father"+i, "relationship": "parent", "color": 3 });
         graph.links.push({ "source": "father"+i, "target": person.firstname, "line": 5 });
       }
       if (person.parents[i].mother) {
-        $('.parents').append('<button data="'+person.parents[0].mother+'" class="fetch person-mother btn btn-link">Mother</button>');        
+        $('.parents').append('<button data="'+person.parents[i].mother+'" class="fetch person-mother btn btn-link">Mother</button>');        
         graph.nodes.push({ "id": "mother"+i, "relationship": "parent", "color": 3 });
         graph.links.push({ "source": "mother"+i, "target": person.firstname, "line": 5 });
       }
