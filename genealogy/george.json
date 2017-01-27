@@ -3,6 +3,10 @@
 	"middlename": "Almon",
 	"surname": "Clegg",
 	
+	"portrait": "",
+	
+	"gender": "male",
+	
 	"birth": [
 		{ "date": "4 January 1870" },
 		{ "place": "Springville, Utah, Utah Territory, United States" }

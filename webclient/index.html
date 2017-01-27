@@ -1,0 +1,72 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Decentralized Distributed Tree</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Decentralized Distributed Tree</h2>
+    <hr>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="personId">Person ID</label>
+          <input type="text" class="form-control personid" id="personId" value="https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/luke.json">
+        </div>
+        <button type="button" class="start btn btn-primary">Go!</button>
+      </form>
+    
+    <div class="row">
+      <!-- Column: Person Details -->
+      <div class="col-md-6">
+        <!-- Person Box -->
+        <div class="person-box">
+          <div class="parents"></div>
+          
+          <div class="person-vitals">
+            <img class="portrait">
+            <h2 class="person-name"></h2>
+            <div class="person-birth-date"></div>
+            <div class="person-birth-place"></div>
+            <div class="person-death-date"></div>
+            <div class="person-death-place"></div>
+          </div>
+
+          <!-- Relationships -->
+          <h3>Spouse</h3>
+          <ul class="spouse"></ul>
+          <!-- <button class="fetch2 person-spouse btn btn-link"></button> -->
+
+          <h3>Children</h3>
+          <ul class="children"></ul>
+          <!-- <button class="fetch2 person-child btn btn-link"></button> -->
+
+          <h3>Notes</h3>
+          <div class="notes"></div>
+          
+          <!-- Maintainer -->
+          <h3>Repository</h3>
+          <div class="maintainer"></div>
+          <div class="raw"></div>
+        </div>
+      </div>
+
+      <!-- Column: node graph -->
+      <div class="col-md-6">
+        <svg class="graph" width="400" height="500"></svg>
+      </div>
+    </div>    
+
+
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="js/logic.js"></script>
+</body>
+</html>

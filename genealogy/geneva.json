@@ -3,6 +3,10 @@
 	"middlename": "",
 	"surname": "Denison",
 	
+	"portrait": "",
+	
+	"gender": "female",
+	
 	"birth": [
 		{ "date": "23 June 1904" },
 		{ "place": "Manti, Sanpete, Utah" }

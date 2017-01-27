@@ -3,6 +3,10 @@
 	"middlename": "Elizabeth",
 	"surname": "Giles",
 	
+	"portrait": "",
+	
+	"gender": "female",
+	
 	"birth": [
 		{ "date": "11 March 1871" },
 		{ "place": "Heber City, Wasatch, Utah Territory, United States" }

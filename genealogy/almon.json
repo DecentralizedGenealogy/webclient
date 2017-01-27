@@ -3,6 +3,10 @@
 	"middlename": "Giles",
 	"surname": "Clegg",
 	
+	"portrait": "",
+	
+	"gender": "male",
+	
 	"birth": [
 		{ "date": "28 January 1903" },
 		{ "place": "Heber City, Wasatch, Utah, United States" }
