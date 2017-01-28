@@ -1,8 +1,10 @@
-# TODO:
-* Create a search index
 
-* github clones
-- GitLab https://gitlab.com/gitlab-org/gitlab-ce/
+
+# Looking for volunteers to create:
+* A search engine utilizing github webhooks to update the search index.
+* A web and/or electron client
+* A tree hosting service (gitlab might be a good start)
+
 
 # Tenets
 	- No enforcement of referential integrity. The client could implement a soft version of ref integrity. If you remove a child from a parent, the child may still maintain relationship to parent.
@@ -19,18 +21,3 @@
 # To run HTML client
 1. http-server -p 5000
 2. go to: http://localhost:5000/webclient/
-
-
-# File format options:
-* https://en.wikipedia.org/wiki/JSON-LD
-* gedcomx
-
-# Steps to run IPFS
-1. Install IPFS (https://ipfs.io/docs/install/)
-2. run: ipfs init
-3. Add CORS headers
-	* ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-  * ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
-  * ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
-4. Run: ipfs daemon
-5. Go to http://localhost:5001/webui/

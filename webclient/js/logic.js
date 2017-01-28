@@ -38,12 +38,12 @@ function getPerson(url) {
     // Render person-box
     $('.person-name').text(person.firstname+" "+person.middlename+" "+person.surname);
     if (person.birth) {
-      $('.person-birth-date').text("Birth Date: "+person.birth[0].date);
-      $('.person-birth-place').text("Birth Place: "+person.birth[1].place);
+      $('.person-birth-date').html('<span class="vitals">BIRTH</span>'+person.birth[0].date);
+      $('.person-birth-place').text(person.birth[1].place);
     }
     if (person.death) {
-      $('.person-death-date').text("Death Date: "+person.death[0].date);
-      $('.person-death-place').text("Death Place: "+person.death[1].place);
+      $('.person-death-date').html('<span class="vitals">DEATH</span>'+person.death[0].date);
+      $('.person-death-place').text(person.death[1].place);
     }
     
     // Gender
