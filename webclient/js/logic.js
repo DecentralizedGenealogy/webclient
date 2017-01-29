@@ -16,13 +16,6 @@ function getPerson(url) {
   graph.nodes = [];
   graph.links = [];
   
-  // Person maintainer
-  var maintainer = url.split('/')[3];
-  $('.maintainer').html('Maintainer: <a href="https://github.com/'+maintainer+'">'+maintainer+'</a>');
-  var githubUrl = url.replace('raw.githubusercontent.com', 'github.com');
-  var githubUrl = githubUrl.replace('/master/', '/blob/master/');
-  $('.raw').html('Raw Source: <a href="'+githubUrl+'">Github</a>');
-  
   $.get(url, function(rsp) {
     person = JSON.parse(rsp);
     console.log(person);
@@ -88,13 +81,34 @@ function getPerson(url) {
         graph.links.push({ "source": "child"+i, "target": person.firstname, "line": 20 });
       }      
     }
+
+    // Person maintainer
+    person.maintainer = url.split('/')[3];
+    $('.maintainer').html('Maintainer: <a href="https://github.com/'+person.maintainer+'" target="_blank">'+person.maintainer+'</a>');
+    var githubUrl = url.replace('raw.githubusercontent.com', 'github.com');
+    var githubUrl = githubUrl.replace('/master/', '/blob/master/');
+    $('.raw').html('Raw Source: <a href="'+githubUrl+'" target="_blank">Github</a>');
     
     // kickoff oneHop call to generate tree
     oneHop(person);    
-    
   });
-
 }
+
+// Populat Change Request Modal
+$('#edit').on('shown.bs.modal', function () {
+  $('.maintainer_edit').text(person.maintainer);
+  $('#first_name').val(person.firstname);
+  $('#middle_name').val(person.middlename);
+  $('#surname').val(person.surname);
+  if (person.birth) {
+    $('#birth_date').val(person.birth[0].date);
+    $('#birth_place').val(person.birth[1].place);
+  }
+  if (person.death) {
+    $('#death_date').val(person.death[0].date);
+    $('#death_place').val(person.death[1].place);
+  }
+})
 
 // Get all immediate relationships
 var graph = { "nodes": [ ], "links": [ ] };

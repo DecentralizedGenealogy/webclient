@@ -29,6 +29,7 @@
           <div class="parents"></div>
           
           <div class="person-vitals">
+            <button type="button" class="edit-btn btn btn-warning btn-xs" data-toggle="modal" data-target="#edit">Edit</button>
             <img class="portrait">
             <div class="person-name"></div>
             <div class="person-birth-date"></div>
@@ -46,6 +47,9 @@
           <ul class="children"></ul>
           <!-- <button class="fetch2 person-child btn btn-link"></button> -->
 
+          <h3>Sources</h3>
+          <div class="sources"></div>
+
           <h3>Notes</h3>
           <div class="notes"></div>
           
@@ -61,12 +65,73 @@
         <svg class="graph" width="400" height="500"></svg>
       </div>
     </div>    
-
-
   </div>
   
+  <!-- Edit Modal -->
+  <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Issue Change Request to: <span class="maintainer_edit"></span></h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="first_name" class="col-sm-3 control-label">Given Name</label>
+              <div class="col-sm-9">
+                <input class="form-control" id="first_name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="middle_name" class="col-sm-3 control-label">Middle Name</label>
+              <div class="col-sm-9">
+                <input class="form-control" id="middle_name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="surname" class="col-sm-3 control-label">Surname</label>
+              <div class="col-sm-9">
+                <input class="form-control" id="surname">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="birth_date" class="col-sm-3 control-label">Birth Date</label>
+              <div class="col-sm-9">
+                <input class="form-control" id="birth_date">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="birth_place" class="col-sm-3 control-label">Birth Place</label>
+              <div class="col-sm-9">
+                <input class="form-control" id="birth_place">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="death_date" class="col-sm-3 control-label">Death Date</label>
+              <div class="col-sm-9">
+                <input class="form-control" id="death_date">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="death_date" class="col-sm-3 control-label">Death Date</label>
+              <div class="col-sm-9">
+                <input class="form-control" id="death_date">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Submit Change Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="js/logic.js"></script>
+  <script src="js/modal.js"></script>
 </body>
 </html>
