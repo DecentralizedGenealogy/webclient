@@ -8,6 +8,7 @@ $('.container').on('click', '.fetch', function(e) {
 });
 
 // Get person and render person box
+var graph = { "nodes": [ ], "links": [ ] };
 function getPerson(url) {
   // Reset the DOM
   $('.person-box').show();
@@ -90,11 +91,11 @@ function getPerson(url) {
     $('.raw').html('Raw Source: <a href="'+githubUrl+'" target="_blank">Github</a>');
     
     // kickoff oneHop call to generate tree
-    oneHop(person);    
+    renderGraph();
   });
 }
 
-// Populat Change Request Modal
+// Populate Change Request Modal
 $('#edit').on('shown.bs.modal', function () {
   $('.maintainer_edit').text(person.maintainer);
   $('#first_name').val(person.firstname);
@@ -110,12 +111,7 @@ $('#edit').on('shown.bs.modal', function () {
   }
 })
 
-// Get all immediate relationships
-var graph = { "nodes": [ ], "links": [ ] };
-function oneHop (person) {
-  renderGraph();
-}
-
+// Render onehop tree
 function renderGraph() {
   var svg = d3.select("svg");
   var width = +svg.attr("width");
@@ -131,8 +127,7 @@ function renderGraph() {
     .attr("class", "links")
     .selectAll("line")
     .data(graph.links)
-    .enter().append("line")
-    .attr("stroke-width", function(d) { return Math.sqrt(d.line); });
+    .enter().append("line");
 
   var node = svg.append("g")
     .attr("class", "nodes")
