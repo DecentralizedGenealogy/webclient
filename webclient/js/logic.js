@@ -69,7 +69,7 @@ function getPerson(url) {
       for (var i=0; i<person.spouse.length; i++) {
         $('.spouse').append('<li><button class="fetch btn btn-link" data="'+person.spouse[i]+'">spouse '+i+'</button></li>');
         graph.nodes.push({ "id": "spouse"+i, "relationship": "spouse", "color": 1 });
-        graph.links.push({ "source": "spouse"+i, "target": person.firstname, "line": 10 });
+        graph.links.push({ "source": "spouse"+i, "target": person.firstname, "line": 8 });
       }      
     }
 
@@ -79,7 +79,7 @@ function getPerson(url) {
       for (var i=0; i<person.children.length; i++) {
         $('.children').append('<li><button class="fetch btn btn-link" data="'+person.children[i]+'">child '+i+'</button></li>');
         graph.nodes.push({ "id": "child"+i, "relationship": "child", "color": 2 });
-        graph.links.push({ "source": "child"+i, "target": person.firstname, "line": 20 });
+        graph.links.push({ "source": "child"+i, "target": person.firstname, "line": 11 });
       }      
     }
 
@@ -119,7 +119,9 @@ function renderGraph() {
   var color = d3.scaleOrdinal(d3.schemeCategory20);
 
   var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+    .force("link", d3.forceLink()
+      .id(function(d) { console.log(d); return d.id; })
+      .distance("140"))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -127,21 +129,33 @@ function renderGraph() {
     .attr("class", "links")
     .selectAll("line")
     .data(graph.links)
-    .enter().append("line");
+    .enter().append("line")
+    .attr("stroke-width", function(d) { return d.line; });
 
   var node = svg.append("g")
     .attr("class", "nodes")
     .selectAll("circle")
     .data(graph.nodes)
-    .enter().append("circle")
-    .attr("r", 10)
+    .enter().append('g')
+    .attr("class","node-wrapper")
+    .append("circle")
+    .attr("r", 40)
     .attr("fill", function(d) { return color(d.color); })
     .call(d3.drag()
       .on("start", dragstarted)
       .on("drag", dragged)
       .on("end", dragended));
 
+  // Add hover text to nodes
   node.append("title").text(function(d) { return d.id; });
+
+  // Put labels on nodes
+  var bogus = d3.selectAll(".nodes")
+    .selectAll('g')
+    .append("text")
+    .attr("dx", 50)
+    .attr("dy", 50)
+    .text(function(d) { return d.id; });
 
   simulation.nodes(graph.nodes).on("tick", ticked);
   simulation.force("link").links(graph.links);
