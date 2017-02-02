@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+	<style>
+	.link { stroke: #ccc; }
+	.node text { pointer-events: none; font: 10px sans-serif; }
+	</style>
+<body>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+var data = {
+   "nodes":[
+      { "name":"Myriel" },
+      {         "name":"Napoleon"      },
+      {         "name":"Mlle.Baptistine"      },
+      {         "name":"Mme.Magloire"      },
+      {         "name":"CountessdeLo"      },
+      {         "name":"Geborand"      },
+      {         "name":"Champtercier"      },
+      {         "name":"Cravatte"      },
+      {         "name":"Count"      }
+   ],
+   "links":[
+      {         "source":1,         "target":3      },
+      {         "source":2,         "target":5      },
+      {         "source":3,         "target":2      },
+      {         "source":4,         "target":7      },
+      {         "source":5,         "target":2      },
+      {         "source":6,         "target":8      },
+      {         "source":7,         "target":5      },
+      {         "source":8,         "target":1      }
+   ]
+};
+var width = 960;
+var height = 500;
+
+var svg = d3.select("body").append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+var simulation = d3.forceSimulation()
+  .force("center", d3.forceCenter(width / 2, height / 2))
+  .force("charge", d3.forceManyBody())
+  .force("link", d3.forceLink());
+
+simulation.nodes(data.nodes);
+
+simulation
+  .force("link")
+  .distance("150")
+  .links(data.links);
+
+var link = svg.selectAll(".link")
+  .data(data.links)
+  .enter().append("line")
+  .attr("class", "link");
+
+var node = svg.selectAll(".node")
+  .data(data.nodes)
+  .enter().append("g")
+  .attr("class", "node");
+
+node.append("image")
+  .attr("xlink:href", "https://github.com/favicon.ico")
+  .attr("x", -32)
+  .attr("y", -32)
+  .attr("width", 64)
+  .attr("height", 64);
+
+node.append("text")
+  .attr("dx", 40)
+  .attr("dy", 5)
+  .text(function(d) { return d.name });
+
+simulation.on("tick", function() {
+  link
+  	.attr("x1", function(d) { return d.source.x; })
+    .attr("y1", function(d) { return d.source.y; })
+    .attr("x2", function(d) { return d.target.x; })
+    .attr("y2", function(d) { return d.target.y; });
+
+  node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+});
+
+</script>
