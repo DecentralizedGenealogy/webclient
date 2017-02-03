@@ -2,7 +2,8 @@
 <meta charset="utf-8">
 	<style>
 	.link { stroke: #ccc; }
-	.node text { pointer-events: none; font: 10px sans-serif; }
+	.node text { font: 16px sans-serif; }
+	.portrait { border-radius: 50%; width: 64px; height: 64px; }
 	</style>
 <body>
 
@@ -10,25 +11,25 @@
 <script>
 var data = {
    "nodes":[
-      { "name":"Myriel" },
-      {         "name":"Napoleon"      },
-      {         "name":"Mlle.Baptistine"      },
-      {         "name":"Mme.Magloire"      },
-      {         "name":"CountessdeLo"      },
-      {         "name":"Geborand"      },
-      {         "name":"Champtercier"      },
-      {         "name":"Cravatte"      },
-      {         "name":"Count"      }
+      { "name":"Luke", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/luke.json" },
+      { "name":"Han", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"https://raw.githubusercontent.com/jimmyz/upgraded-octo-waffle/master/han.json" },
+      { "name":"Leih", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
+      { "name":"Padme", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
+      { "name":"Anikan", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
+      { "name":"Geborand", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
+      { "name":"Champtercier", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
+      { "name":"Cravatte", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
+      { "name":"Count", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" }
    ],
    "links":[
-      {         "source":1,         "target":3      },
-      {         "source":2,         "target":5      },
-      {         "source":3,         "target":2      },
-      {         "source":4,         "target":7      },
-      {         "source":5,         "target":2      },
-      {         "source":6,         "target":8      },
-      {         "source":7,         "target":5      },
-      {         "source":8,         "target":1      }
+      { "source":1, "target":3 },
+      { "source":2, "target":5 },
+      { "source":3, "target":2 },
+      { "source":4, "target":7 },
+      { "source":5, "target":2 },
+      { "source":6, "target":8 },
+      { "source":7, "target":5 },
+      { "source":8, "target":1 }
    ]
 };
 var width = 960;
@@ -61,13 +62,15 @@ var node = svg.selectAll(".node")
   .attr("class", "node");
 
 node.append("image")
-  .attr("xlink:href", "https://github.com/favicon.ico")
+  .attr("xlink:href", function(d) { return d.image; })
+  .attr("class", "portrait")
   .attr("x", -32)
-  .attr("y", -32)
-  .attr("width", 64)
-  .attr("height", 64);
+  .attr("y", -32);
 
-node.append("text")
+node.append("a")
+	.attr("xlink:href", function(d) { return d.link; })
+	.attr("target","_blank")
+	.append("text")
   .attr("dx", 40)
   .attr("dy", 5)
   .text(function(d) { return d.name });
