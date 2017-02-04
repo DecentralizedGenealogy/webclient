@@ -9,27 +9,27 @@
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-var data = {
+var graph = {
    "nodes":[
-      { "name":"Luke", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/luke.json" },
-      { "name":"Han", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"https://raw.githubusercontent.com/jimmyz/upgraded-octo-waffle/master/han.json" },
-      { "name":"Leih", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
-      { "name":"Padme", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
-      { "name":"Anikan", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
-      { "name":"Geborand", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
-      { "name":"Champtercier", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
-      { "name":"Cravatte", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" },
-      { "name":"Count", "image":"https://dl.dropboxusercontent.com/u/8037582/log/icons/gender-unknown-large.svg", "link":"" }
+      { "id":"Luke", "relationship": "parent", "image":"images/man.svg", "link":"https://raw.githubusercontent.com/misbach/DecentralizedDistributedGenealogy/master/starwars/woman.svg" },
+      { "id":"Han", "relationship": "parent", "image":"images/man.svg", "link":"https://raw.githubusercontent.com/jimmyz/upgraded-octo-waffle/master/han.json" },
+      { "id":"Leih", "relationship": "parent", "image":"images/woman.svg", "link":"" },
+      { "id":"Padme", "relationship": "parent", "image":"images/girl.svg", "link":"" },
+      { "id":"Anikan", "relationship": "parent", "image":"images/girl.svg", "link":"" },
+      { "id":"Geborand", "relationship": "parent", "image":"images/girl.svg", "link":"" },
+      { "id":"Champtercier", "relationship": "parent", "image":"images/girl.svg", "link":"" },
+      { "id":"Cravatte", "relationship": "parent", "image":"images/girl.svg", "link":"" },
+      { "id":"Count", "relationship": "parent", "image":"images/girl.svg", "link":"" }
    ],
    "links":[
-      { "source":1, "target":3 },
-      { "source":2, "target":5 },
-      { "source":3, "target":2 },
-      { "source":4, "target":7 },
-      { "source":5, "target":2 },
-      { "source":6, "target":8 },
-      { "source":7, "target":5 },
-      { "source":8, "target":1 }
+      { "source": "Han", "target": "Luke" },
+      { "source": "Luke", "target": "Cravatte" },
+      { "source": "Anikan", "target": "Geborand" },
+      { "source": "Cravatte", "target": "Han" },
+      { "source": "Luke", "target": "Padme" },
+      { "source": "Champtercier", "target": "Anikan" },
+      { "source": "Padme", "target": "Geborand" },
+      { "source": "Geborand", "target": "Anikan" }
    ]
 };
 var width = 960;
@@ -41,25 +41,31 @@ var svg = d3.select("body").append("svg")
 
 var simulation = d3.forceSimulation()
   .force("center", d3.forceCenter(width / 2, height / 2))
-  .force("charge", d3.forceManyBody())
+  .force("charge", d3.forceManyBody().strength(-50))
   .force("link", d3.forceLink());
 
-simulation.nodes(data.nodes);
+simulation.nodes(graph.nodes);
 
 simulation
   .force("link")
+  .id(function(d) { console.log(d); return d.id; })
   .distance("150")
-  .links(data.links);
+  .links(graph.links);
 
 var link = svg.selectAll(".link")
-  .data(data.links)
+  .data(graph.links)
   .enter().append("line")
   .attr("class", "link");
 
 var node = svg.selectAll(".node")
-  .data(data.nodes)
+  .data(graph.nodes)
   .enter().append("g")
-  .attr("class", "node");
+  .attr("class", "node")
+    .call(d3.drag()
+    .on("start", dragstarted)
+    .on("drag", dragged)
+    .on("end", dragended));
+
 
 node.append("image")
   .attr("xlink:href", function(d) { return d.image; })
@@ -73,7 +79,7 @@ node.append("a")
 	.append("text")
   .attr("dx", 40)
   .attr("dy", 5)
-  .text(function(d) { return d.name });
+  .text(function(d) { return d.id });
 
 simulation.on("tick", function() {
   link
@@ -85,4 +91,20 @@ simulation.on("tick", function() {
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 });
 
+function dragstarted(d) {
+  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+
+function dragged(d) {
+  d.fx = d3.event.x;
+  d.fy = d3.event.y;
+}
+
+function dragended(d) {
+  if (!d3.event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
 </script>

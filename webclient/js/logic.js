@@ -47,18 +47,18 @@ function getPerson(url) {
     // Notes
     $('.notes').text(person.notes);
 
-    graph.nodes.push({ "id": person.firstname, "relationship": "self", "color": 0 });
+    graph.nodes.push({ "id": person.firstname, "relationship": "self", "color": "#1f77b4" });
 
     // Parents
     for (var i=0; i<person.parents.length; i++) {
       if (person.parents[i].father) {
         $('.parents').append('<button data="'+person.parents[i].father+'" class="fetch person-father btn btn-link">Father</button>');        
-        graph.nodes.push({ "id": "father"+i, "relationship": "parent", "color": 3 });
+        graph.nodes.push({ "id": "father"+i, "relationship": "parent", "color": "#aec7e8" });
         graph.links.push({ "source": "father"+i, "target": person.firstname, "line": 5 });
       }
       if (person.parents[i].mother) {
         $('.parents').append('<button data="'+person.parents[i].mother+'" class="fetch person-mother btn btn-link">Mother</button>');        
-        graph.nodes.push({ "id": "mother"+i, "relationship": "parent", "color": 3 });
+        graph.nodes.push({ "id": "mother"+i, "relationship": "parent", "color": "#aec7e8" });
         graph.links.push({ "source": "mother"+i, "target": person.firstname, "line": 5 });
       }
     }
@@ -68,7 +68,7 @@ function getPerson(url) {
     if (person.spouse.length > 0) {
       for (var i=0; i<person.spouse.length; i++) {
         $('.spouse').append('<li><button class="fetch btn btn-link" data="'+person.spouse[i]+'">spouse '+i+'</button></li>');
-        graph.nodes.push({ "id": "spouse"+i, "relationship": "spouse", "color": 1 });
+        graph.nodes.push({ "id": "spouse"+i, "relationship": "spouse", "color": "#cccccc" });
         graph.links.push({ "source": "spouse"+i, "target": person.firstname, "line": 8 });
       }      
     }
@@ -78,7 +78,7 @@ function getPerson(url) {
     if (person.children.length > 0) {
       for (var i=0; i<person.children.length; i++) {
         $('.children').append('<li><button class="fetch btn btn-link" data="'+person.children[i]+'">child '+i+'</button></li>');
-        graph.nodes.push({ "id": "child"+i, "relationship": "child", "color": 2 });
+        graph.nodes.push({ "id": "child"+i, "relationship": "child", "color": "#ff7f0e" });
         graph.links.push({ "source": "child"+i, "target": person.firstname, "line": 11 });
       }      
     }
@@ -91,6 +91,7 @@ function getPerson(url) {
     $('.raw').html('Raw Source: <a href="'+githubUrl+'" target="_blank">Github</a>');
     
     // kickoff oneHop call to generate tree
+    console.log(graph);
     renderGraph();
   });
 }
@@ -116,13 +117,12 @@ function renderGraph() {
   var svg = d3.select("svg");
   var width = +svg.attr("width");
   var height = +svg.attr("height");
-  var color = d3.scaleOrdinal(d3.schemeCategory20);
 
   var simulation = d3.forceSimulation()
     .force("link", d3.forceLink()
       .id(function(d) { console.log(d); return d.id; })
       .distance("140"))
-    .force("charge", d3.forceManyBody())
+    .force("charge", d3.forceManyBody().strength(-50))
     .force("center", d3.forceCenter(width / 2, height / 2));
 
   var link = svg.append("g")
@@ -140,7 +140,7 @@ function renderGraph() {
     .attr("class","node-wrapper")
     .append("circle")
     .attr("r", 40)
-    .attr("fill", function(d) { return color(d.color); })
+    .attr("fill", function(d) { return d.color })
     .call(d3.drag()
       .on("start", dragstarted)
       .on("drag", dragged)
@@ -162,16 +162,15 @@ function renderGraph() {
 
   function ticked() {
     link
-      .attr("x1", function(d) {
-        return d.source.x;
-      })
+      .attr("x1", function(d) { return d.source.x; })
       .attr("y1", function(d) { return d.source.y; })
       .attr("x2", function(d) { return d.target.x; })
       .attr("y2", function(d) { return d.target.y; });
 
-    node
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
+    // node
+    //   .attr("cx", function(d) { return d.x; })
+    //   .attr("cy", function(d) { return d.y; });
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   }
 
   function dragstarted(d) {
