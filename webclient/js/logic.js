@@ -41,24 +41,35 @@ function getPerson(url) {
     }
     
     // Gender
-    if (person.gender == "male") $('.person-vitals').css("background-color","rgba(192, 202, 255, 0.26)");
-      else $('.person-vitals').css("background-color","rgba(255, 192, 203, 0.26)");
+    if (person.gender == "male") {
+      $('.person-vitals').css("background-color","rgba(192, 202, 255, 0.26)");
+      var self_icon = "images/man.svg"
+      var spouse_icon = "images/woman.svg"
+    }
+    else {
+      $('.person-vitals').css("background-color","rgba(255, 192, 203, 0.26)");
+      var self_icon = "images/woman.svg"
+      var spouse_icon = "images/man.svg"
+    }
     
     // Notes
     $('.notes').text(person.notes);
 
-    graph.nodes.push({ "id": person.firstname, "relationship": "self", "color": "#1f77b4" });
+    // ------
+    // Nodes
+    // ------
+    graph.nodes.push({ "id": person.firstname, "relationship": "self", "color": "#1f77b4", "image": self_icon, "link": person.id });
 
     // Parents
     for (var i=0; i<person.parents.length; i++) {
       if (person.parents[i].father) {
         $('.parents').append('<button data="'+person.parents[i].father+'" class="fetch person-father btn btn-link">Father</button>');        
-        graph.nodes.push({ "id": "father"+i, "relationship": "parent", "color": "#aec7e8" });
+        graph.nodes.push({ "id": "father"+i, "relationship": "parent", "color": "#aec7e8", "image":"images/grandpa.svg", "link": person.parents[i].father });
         graph.links.push({ "source": "father"+i, "target": person.firstname, "line": 5 });
       }
       if (person.parents[i].mother) {
         $('.parents').append('<button data="'+person.parents[i].mother+'" class="fetch person-mother btn btn-link">Mother</button>');        
-        graph.nodes.push({ "id": "mother"+i, "relationship": "parent", "color": "#aec7e8" });
+        graph.nodes.push({ "id": "mother"+i, "relationship": "parent", "color": "#aec7e8", "image":"images/grandma.svg", "link": person.parents[i].mother });
         graph.links.push({ "source": "mother"+i, "target": person.firstname, "line": 5 });
       }
     }
@@ -68,7 +79,7 @@ function getPerson(url) {
     if (person.spouse.length > 0) {
       for (var i=0; i<person.spouse.length; i++) {
         $('.spouse').append('<li><button class="fetch btn btn-link" data="'+person.spouse[i]+'">spouse '+i+'</button></li>');
-        graph.nodes.push({ "id": "spouse"+i, "relationship": "spouse", "color": "#cccccc" });
+        graph.nodes.push({ "id": "spouse"+i, "relationship": "spouse", "color": "#cccccc", "image": spouse_icon, "link": person.spouse[i] });
         graph.links.push({ "source": "spouse"+i, "target": person.firstname, "line": 8 });
       }      
     }
@@ -78,7 +89,7 @@ function getPerson(url) {
     if (person.children.length > 0) {
       for (var i=0; i<person.children.length; i++) {
         $('.children').append('<li><button class="fetch btn btn-link" data="'+person.children[i]+'">child '+i+'</button></li>');
-        graph.nodes.push({ "id": "child"+i, "relationship": "child", "color": "#ff7f0e" });
+        graph.nodes.push({ "id": "child"+i, "relationship": "child", "color": "#ff7f0e", "image":"images/girl.svg", "link": person.children[i] });
         graph.links.push({ "source": "child"+i, "target": person.firstname, "line": 11 });
       }      
     }
@@ -90,7 +101,6 @@ function getPerson(url) {
     var githubUrl = githubUrl.replace('/master/', '/blob/master/');
     $('.raw').html('Raw Source: <a href="'+githubUrl+'" target="_blank">Github</a>');
     
-    // kickoff oneHop call to generate tree
     console.log(graph);
     renderGraph();
   });
@@ -119,59 +129,60 @@ function renderGraph() {
   var height = +svg.attr("height");
 
   var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink()
-      .id(function(d) { console.log(d); return d.id; })
-      .distance("140"))
+    .force("center", d3.forceCenter(width / 2, height / 2))
     .force("charge", d3.forceManyBody().strength(-50))
-    .force("center", d3.forceCenter(width / 2, height / 2));
+    .force("link", d3.forceLink());
 
-  var link = svg.append("g")
-    .attr("class", "links")
-    .selectAll("line")
+  simulation.nodes(graph.nodes);
+
+  simulation
+    .force("link")
+    .id(function(d) { return d.id; })
+    .distance("100")
+    .links(graph.links);
+
+  var link = svg.selectAll(".link")
     .data(graph.links)
     .enter().append("line")
-    .attr("stroke-width", function(d) { return d.line; });
+    .attr("class", "link")
+    .attr("stroke-width", function(d) { return d.line; });;
 
-  var node = svg.append("g")
-    .attr("class", "nodes")
-    .selectAll("circle")
+  var node = svg.selectAll(".node")
     .data(graph.nodes)
-    .enter().append('g')
-    .attr("class","node-wrapper")
-    .append("circle")
-    .attr("r", 40)
-    .attr("fill", function(d) { return d.color })
-    .call(d3.drag()
+    .enter().append("g")
+    .attr("class", "node")
+      .call(d3.drag()
       .on("start", dragstarted)
       .on("drag", dragged)
       .on("end", dragended));
 
+  node.append("image")
+    .attr("xlink:href", function(d) { return d.image; })
+    .attr("class", "node_img")
+    .attr("x", -32)
+    .attr("y", -32);
+
+  node.append("a")
+    .append("text")
+    .attr("dx", 5)
+    .attr("dy", 55)
+    .attr("text-anchor", "middle")
+    .attr("class","fetch")
+    .attr("data", function(d) { return d.link })
+    .text(function(d) { return d.id });
+
   // Add hover text to nodes
   node.append("title").text(function(d) { return d.id; });
 
-  // Put labels on nodes
-  var bogus = d3.selectAll(".nodes")
-    .selectAll('g')
-    .append("text")
-    .attr("dx", 50)
-    .attr("dy", 50)
-    .text(function(d) { return d.id; });
-
-  simulation.nodes(graph.nodes).on("tick", ticked);
-  simulation.force("link").links(graph.links);
-
-  function ticked() {
+  simulation.on("tick", function() {
     link
       .attr("x1", function(d) { return d.source.x; })
       .attr("y1", function(d) { return d.source.y; })
       .attr("x2", function(d) { return d.target.x; })
       .attr("y2", function(d) { return d.target.y; });
 
-    // node
-    //   .attr("cx", function(d) { return d.x; })
-    //   .attr("cy", function(d) { return d.y; });
     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-  }
+  });
 
   function dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
