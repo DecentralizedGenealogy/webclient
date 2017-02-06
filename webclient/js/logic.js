@@ -89,7 +89,7 @@ function getPerson(url) {
     if (person.children.length > 0) {
       for (var i=0; i<person.children.length; i++) {
         $('.children').append('<li><button class="fetch btn btn-link" data="'+person.children[i]+'">child '+i+'</button></li>');
-        graph.nodes.push({ "id": "child"+i, "relationship": "child", "color": "#ff7f0e", "image":"images/girl.svg", "link": person.children[i] });
+        graph.nodes.push({ "id": "child"+i, "relationship": "child", "color": "#ff7f0e", "image":"images/boy.svg", "link": person.children[i] });
         graph.links.push({ "source": "child"+i, "target": person.firstname, "line": 11 });
       }      
     }
