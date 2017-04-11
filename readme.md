@@ -1,4 +1,6 @@
-
+# GEDCOM X spec
+https://github.com/FamilySearch/gedcomx/blob/master/specifications/file-format-specification.md
+https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md
 
 # Looking for volunteers to create:
 * A search engine utilizing github webhooks to update the search index.
