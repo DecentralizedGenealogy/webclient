@@ -1,10 +1,6 @@
 var params = getQueryParams();
 var treeObj = null;
 
-window.onerror = function(){
-   return true;
-}
-
 // Walk tree for ancestors and descendants
 getTree(params.id, {id: params.id, name: null, _parents: [], _children: []});
 
@@ -15,87 +11,43 @@ function getTree(url = params.id, node) {
 	generationCount++;
 	asyncCount ++;
 
-
-
-	var jqxhr = $.ajax(url)
+	$.get(url)
   .done(function(rsp) {
-  }).fail(function(error) {
-    console.log( "error", error );
-  }).always(function(rsp) {
     person = JSON.parse(rsp);
-    var parents = getParents(person.persons[0].display.familiesAsChild[0], person.persons);
-    // console.log(person.persons[0].id, person.persons[0].display.name+": ", parents.father.name, parents.mother.name);
 
+    // Fill in name of root person
 		if (node.name == null) node.name = person.persons[0].display.name;
-		// Find current person in json tree
+
+    // Get Parents
+    var parents = getParents(person.persons[0].display.familiesAsChild[0], person.persons);
+
+		// Find current person in json tree (node)
 		var tmpNode = find(node, url);
     tmpNode._parents.push({id: parents.father.url, name: parents.father.name, _parents: []});
     tmpNode._parents.push({id: parents.mother.url, name: parents.mother.name, _parents: []});
+		tmpNode.lifespan = person.persons[0].display.lifespan;
+		tmpNode.birthPlace = person.persons[0].display.birthPlace;
 
 		// Get children of root person only
 		// TODO Get multiple generations of descendants
-		if (generationCount == 0) {
-			if (person.persons[0].display.familiesAsParent[0].children.length > 0) {
-				for (var i=0; i < person.persons[0].display.familiesAsParent[0].children.length; i++) {
-					node._children.push({id: person.persons[0].display.familiesAsParent[0].children[i].resource, name: person.persons[0].display.familiesAsParent[0].children[i].resourceId});
-				}
-			}
+		if (generationCount == 0 && person.persons[0].display.familiesAsParent[0].children.length > 0) {
+			node._children = getChildren(person.persons[0].display.familiesAsParent[0].children, person.persons);
 		}
+
     // Stop after 4 generations
     if (generationCount < 6) {
 	    getTree(parents.father.url, node);
 	    getTree(parents.mother.url, node);
     }
+  }).always(function(rsp) {
     // Detect when finished
     if (asyncCount-- == 0 ) {
     	treeObj = node;
     	console.log(treeObj);
+    	// Notify D3 to render the tree
     	document.dispatchEvent(new Event('treeComplete'));
-    }
+    }  		
   });
-
-
-
-
- //  $.get(url, function(rsp, error) {
- //    person = JSON.parse(rsp);
- //    var parents = getParents(person.persons[0].display.familiesAsChild[0], person.persons);
- //    // console.log(person.persons[0].id, person.persons[0].display.name+": ", parents.father.name, parents.mother.name);
-
-	// 	if (node.name == null) node.name = person.persons[0].display.name;
-	// 	// Find current person in json tree
-	// 	var tmpNode = find(node, url);
- //    tmpNode._parents.push({id: parents.father.url, name: parents.father.name, _parents: []});
- //    tmpNode._parents.push({id: parents.mother.url, name: parents.mother.name, _parents: []});
-
-	// 	// Get children of root person only
-	// 	// TODO Get multiple generations of descendants
-	// 	if (generationCount == 0) {
-	// 		if (person.persons[0].display.familiesAsParent[0].children.length > 0) {
-	// 			for (var i=0; i < person.persons[0].display.familiesAsParent[0].children.length; i++) {
-	// 				node._children.push({id: person.persons[0].display.familiesAsParent[0].children[i].resource, name: person.persons[0].display.familiesAsParent[0].children[i].resourceId});
-	// 			}
-	// 		}
-	// 	}
-
- //    // Stop after 4 generations
- //    if (generationCount < 7) {
-	//     getTree(parents.father.url, node);
-	//     getTree(parents.mother.url, node);
- //    }
-
- //    // Detect when finished
- //    if (asyncCount-- == 0 ) {
- //    	treeObj = node;
- //    	console.log(treeObj);
- //    	document.dispatchEvent(new Event('treeComplete'));
- //    }
-	// }).fail(function(){
-	// 	console.log("Failure!");
-	// });
-
-
-
 }
 
 // Find person by ID in json object tree
@@ -108,7 +60,23 @@ function find(obj, id) {
   return null;
 }
 
-// Get the parents
+// Get children: Get their IDs from the display->familiesAsParent object. Get their names from the persons array.
+function getChildren(family, persons) {
+	var children = [];
+	// Iterate all children
+	for (var j=0; j < family.length; j++) {
+	  // Get name of child: Assume living if person not found in persons array
+		for (var i=1; i<persons.length; i++) {
+			if (family[j].resourceId == persons[i].id) {
+				var name = (persons[i].display.name);
+			  children.push({ id: persons[0].display.familiesAsParent[0].children[j].resource, name: name });
+			}
+		}
+	}
+	return children;
+}
+
+// Get the parents: Get their IDs from the display->familiesAsChild object. Get their names from the persons array.
 function getParents(family, persons) {
 	var parent1 = family.parent1.resourceId;
 	var parent2 = family.parent2.resourceId;
