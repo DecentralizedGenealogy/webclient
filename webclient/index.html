@@ -1,9 +1,54 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="no-js" lang="">
 <head>
-	<title>Decentralized Distributed Tree</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Decentralized Distributed Tree</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/tree.css">
 </head>
 <body>
-See <a href="person.html?id=https://raw.githubusercontent.com/misbach/familytree/master/people/KWCJ-RN4/KWCJ-RN4.json">Person Viewer</a> or <a href="tree.html?id=https://raw.githubusercontent.com/misbach/familytree/master/people/KWCJ-RN4/KWCJ-RN4.json">Tree Viewer</a>
+  <div class="container">
+    <h2 class="title"><img src="/images/logo.png"> Decentralized Distributed Tree</h2>
+    <hr class="hr">
+    <p>Welcome to THE tree. This is an ongoing effort and this project is in its infancy.</p>
+    <p>Click on the links to see a very rough prototype.</p>
+
+    <center>
+			<div>
+				<a href="tree.html"><img src="/images/tree.svg" width="64px"></a>
+				<div>Pedigree View</div>
+			</div>
+			<div>
+				<a href="person.html"><img src="/images/unknown.svg" width="64px"></a>
+				<div>Profile View</div>
+			</div>
+		</center>
+
+
+    <h3>The DDT is a place where...</h3>
+    <ul>
+    	<li>No enforcement of referential integrity. The client could implement a soft version of ref integrity. If you remove a child from a parent, the child may still maintain relationship to parent.</li>
+    	<li>No garuentee a relationship link won't become 404.</li>
+    	<li>No central authority or control of the tree.</li>
+    	<li>The tree is distributed geographically and authoritatively.</li>
+    	<li>Each person or node in the tree is autonomous.</li>
+    	<li>tree data is open and available to all.</li>
+    	<li>Anyone can suggest (pull request) a change.</li>
+    	<li>Everyone has freedom to fork a node if concensus is not met.</li>
+    	<li>Combined with IPFS the nodes themselves also become decentralized and distributed.</li>
+    	<li>Un-authenticated reading of tree. (The client could allow authentication for trees such as Ancestry, FamilySearch, etc.)</li>
+    </ul>
+
+    <h3>Looking for volunteers to help with...</h3>
+    <ul>
+    	<li>A search engine utilizing github webhooks to update the search index.</li>
+    	<li>A web and/or electron client</li>
+    	<li>A tree hosting service (gitlab might be a good start)</li>
+    </ul>
+
+  </div>
 </body>
 </html>

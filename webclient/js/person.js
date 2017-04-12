@@ -40,6 +40,7 @@ function getPerson(url) {
     $('.person-birth-place').text(person.persons[0].display.birthPlace);
     $('.person-death-date').html('<span class="vitals">DEATH</span>'+person.persons[0].display.deathDate);
     $('.person-death-place').text(person.persons[0].display.deathDate);
+    $('.tree-btn').attr("href", "tree.html?id="+url);
     
     // Gender
     if (person.persons[0].display.gender == "Male") {

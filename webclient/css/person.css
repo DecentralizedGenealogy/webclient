@@ -13,10 +13,11 @@ h3 { margin-bottom: 0px; margin-top: 10px; font-size: 16px; font-weight: bold; t
 }
 .person-row { margin-top: 30px; }
 .person-name { color: #000000; margin-top: 10px; font-size: 24px; font-weight: bold; }
-.person-vitals { border-radius: 5px; min-height: 150px; display: inline-block; width: 100%; color: #696969; }
+.person-vitals { border-radius: 5px; height: 150px; display: inline-block; width: 100%; color: #696969; }
 
 .vitals { font-weight: bold; margin-right: 10px; }
-.edit-btn { float: right; }
+.edit-btn, .tree-btn { float: right; }
+.tree_icon { width: 32px; height: 32px; }
 
 .person-birth-date, .person-death-date { margin-top: 10px; }
 

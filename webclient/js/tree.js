@@ -15,8 +15,12 @@ function getTree(url = params.id, node) {
   .done(function(rsp) {
     person = JSON.parse(rsp);
 
-    // Fill in name of root person
-		if (node.name == null) node.name = person.persons[0].display.name;
+    // Root name info
+		if (node.name == null) {
+			node.name = person.persons[0].display.name;
+			$('.person_name').html(person.persons[0].display.name+' - <a href="/person.html?id='+url+'">View Provile</a>');
+		}
+
 
     // Get Parents
     var parents = getParents(person.persons[0].display.familiesAsChild[0], person.persons);
