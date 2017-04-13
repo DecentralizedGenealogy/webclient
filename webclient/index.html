@@ -6,48 +6,33 @@
   <title>Decentralized Distributed Tree</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <link rel="stylesheet" href="css/tree.css">
 </head>
 <body>
   <div class="container">
     <h2 class="title"><img src="images/logo.png"> Decentralized Distributed Tree</h2>
     <hr class="hr">
-    <p>Welcome to THE tree. This is an ongoing effort and this project is in its infancy.</p>
+    <p>Welcome to THE tree. This project is in its infancy. Click <a href="https://github.com/misbach/DecentralizedDistributedGenealogy">here</a> if you'd like to help</p>
     <p>Click on the links to see a very rough prototype.</p>
 
-    <center>
-			<div>
-				<a href="tree.html"><img src="images/tree.svg" width="64px"></a>
-				<div>Pedigree View</div>
-			</div>
-			<div>
-				<a href="person.html"><img src="images/unknown.svg" width="64px"></a>
-				<div>Profile View</div>
-			</div>
-		</center>
+		<div class="media">
+		  <a href="tree.html"><img class="d-flex mr-3" src="images/tree.svg" alt="tree"></a>
+		  <div class="media-body">
+		    <h5 class="mt-0">Pedigree Viewer</h5>
+		    Rough prototype of a pedigree viewer. Based on d3.
+		  </div>
+		</div>
 
+		<p></p>
 
-    <h3>The DDT is a place where...</h3>
-    <ul>
-    	<li>No enforcement of referential integrity. The client could implement a soft version of ref integrity. If you remove a child from a parent, the child may still maintain relationship to parent.</li>
-    	<li>No garuentee a relationship link won't become 404.</li>
-    	<li>No central authority or control of the tree.</li>
-    	<li>The tree is distributed geographically and authoritatively.</li>
-    	<li>Each person or node in the tree is autonomous.</li>
-    	<li>tree data is open and available to all.</li>
-    	<li>Anyone can suggest (pull request) a change.</li>
-    	<li>Everyone has freedom to fork a node if concensus is not met.</li>
-    	<li>Combined with IPFS the nodes themselves also become decentralized and distributed.</li>
-    	<li>Un-authenticated reading of tree. (The client could allow authentication for trees such as Ancestry, FamilySearch, etc.)</li>
-    </ul>
-
-    <h3>Looking for volunteers to help with...</h3>
-    <ul>
-    	<li>A search engine utilizing github webhooks to update the search index.</li>
-    	<li>A web and/or electron client</li>
-    	<li>A tree hosting service (gitlab might be a good start)</li>
-    </ul>
+		<div class="media">
+		  <a href="person.html"><img class="d-flex mr-3" src="images/unknown.svg" alt="tree"></a>
+		  <div class="media-body">
+		    <h5 class="mt-0">Profile Viewer</h5>
+		    Rough prototype of a pedigree viewer. Based on d3.
+		  </div>
+		</div>
 
   </div>
 </body>
