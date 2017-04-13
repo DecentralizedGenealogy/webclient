@@ -18,7 +18,7 @@ function getTree(url = params.id, node) {
     // Root name info
 		if (node.name == null) {
 			node.name = person.persons[0].display.name;
-			$('.person_name').html(person.persons[0].display.name+' - <a href="/person.html?id='+url+'">View Provile</a>');
+			$('.person_name').html(person.persons[0].display.name+' - <a href="person.html?id='+url+'">View Provile</a>');
 		}
 
 

@@ -31,7 +31,7 @@ function getPerson(url) {
     if (person.persons[0].links.portrait) {
       $('.portrait').attr('src', person.persons[0].links.portrait.href);
     } else {
-      $('.portrait').attr('src', '/images/unknown.svg');
+      $('.portrait').attr('src', 'images/unknown.svg');
     }
 
     // Render person-box
@@ -45,13 +45,13 @@ function getPerson(url) {
     // Gender
     if (person.persons[0].display.gender == "Male") {
       $('.person-vitals').css("background-color","rgba(192, 202, 255, 0.26)");
-      self_icon = "/images/man.svg"
-      spouse_icon = "/images/woman.svg"
+      self_icon = "images/man.svg"
+      spouse_icon = "images/woman.svg"
     }
     else {
       $('.person-vitals').css("background-color","rgba(255, 192, 203, 0.26)");
-      self_icon = "/images/woman.svg"
-      spouse_icon = "/images/man.svg"
+      self_icon = "images/woman.svg"
+      spouse_icon = "images/man.svg"
     }
     
     // Sources
@@ -102,19 +102,19 @@ function oneHop(family) {
       // Father
       if (oneHopPerson.type == "child" && oneHopPerson.rel == "parent1") {
         $('.parents').append('<li><button data="'+oneHopPerson.url+'" class="fetch person-father btn btn-link">Father</button></li>');
-        graph.nodes.push({ "id": "father", "relationship": "parent", "color": "#aec7e8", "image":"/images/grandpa.svg", "link": oneHopPerson.url });
+        graph.nodes.push({ "id": "father", "relationship": "parent", "color": "#aec7e8", "image":"images/grandpa.svg", "link": oneHopPerson.url });
         graph.links.push({ "source": "father", "target": person.persons[0].display.name, "line": 5 });
       }
       // Mother
       if (oneHopPerson.type == "child" && oneHopPerson.rel == "parent2") {
         $('.parents').append('<li><button data="'+oneHopPerson.url+'" class="fetch person-mother btn btn-link">Mother</button></li>');
-        graph.nodes.push({ "id": "mother", "relationship": "parent", "color": "#aec7e8", "image":"/images/grandma.svg", "link": oneHopPerson.url });
+        graph.nodes.push({ "id": "mother", "relationship": "parent", "color": "#aec7e8", "image":"images/grandma.svg", "link": oneHopPerson.url });
         graph.links.push({ "source": "mother", "target": person.persons[0].display.name, "line": 5 });
       }
       // Children
       if (oneHopPerson.type == "parent" && oneHopPerson.rel == "children") {
         $('.children').append('<li><button class="fetch btn btn-link" data="'+oneHopPerson.url+'">child</button></li>');
-        graph.nodes.push({ "id": "child"+oneHopPerson.id, "relationship": "child", "color": "#ff7f0e", "image":"/images/boy.svg", "link": oneHopPerson.url });
+        graph.nodes.push({ "id": "child"+oneHopPerson.id, "relationship": "child", "color": "#ff7f0e", "image":"images/boy.svg", "link": oneHopPerson.url });
         graph.links.push({ "source": "child"+oneHopPerson.id, "target": person.persons[0].display.name, "line": 11 });
       }
     }
