@@ -21,7 +21,12 @@ function getPerson(url) {
 
   $.get(url, function(rsp) {
     person = JSON.parse(rsp);
-    person.maintainer = '<a href="'+url+'" target="_blank">'+url.split("/")[3]+'</a>';
+    var user = url.split("/")[3];
+    var repo = url.split("/")[4];
+    person.maintainer = 'User: <a href="https://github.com/'+user+'" target="_blank">'+user+'</a>';
+    $('.maintainer').html(person.maintainer);
+    $('.raw').html('Source: <a href="'+url+'" target="_blank">GEDCOM X</a>');
+    $('.repo').html('Repository: <a href="https://github.com/'+user+'/'+repo+'" target="_blank">'+repo+'</a>');
     console.log(person);
 
     // Update the URL
@@ -63,10 +68,12 @@ function getPerson(url) {
     }
 
     // Memories
-    for (var i=0; i<person.persons[0].evidence.length; i++) {
-      var memoryId = person.persons[0].evidence[i].id.split('-')[0];
-      var memoryUrl = "https://familysearch.org/photos/artifacts/"+memoryId;
-      $('.memories').append('<li><a href="'+memoryUrl+'" target="_blank">'+memoryId+'</li>')
+    if (person.persons[0].evidence) {
+      for (var i=0; i<person.persons[0].evidence.length; i++) {
+        var memoryId = person.persons[0].evidence[i].id.split('-')[0];
+        var memoryUrl = "https://familysearch.org/photos/artifacts/"+memoryId;
+        $('.memories').append('<li><a href="'+memoryUrl+'" target="_blank">'+memoryId+'</li>')
+      }
     }
 
     // Render one hop nodes
@@ -126,7 +133,6 @@ function oneHop(family) {
 
 // Populate Change Request Modal
 $('#edit').on('shown.bs.modal', function () {
-  $('.maintainer').html(person.maintainer);
   $('#first_name').val(person.persons[0].display.name);
   $('#middle_name').val(person.middlename);
   $('#surname').val(person.surname);

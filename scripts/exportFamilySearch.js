@@ -1,10 +1,15 @@
 /*
-  Description: This script will download from FamilySearch all ancestors starting from the specified starting person "start",
-  and will continue for the number of generattions specified in the "geneerations" var. Also gets portrait.
+  Description: This script has two modes ("array", "tree"). You set the mode in the "type" var.
+    "tree": Will download from FamilySearch all ancestors starting from the specified starting person "start", and will continue for the number of generattions specified in the "generations" var.
+    "array": Will download all PIDS in the "pids" array.
 
-  Post export: Update the portrait field, resource links in the display->families
+  Post export: This scripts also:
+    Downloades the portrait.
+    Updates the links->portrait->href field to point to the relative path of the downloaded portrait.
+    Updates all resource links in the display->families objects to point to relative paths
 
-  TODO: Get memories, get sources
+  TODO: Remove relationship links in display->famailiesAs so they don't render in the One Hop Relatives.
+    Possible solution: Keep an array if PIDs we are getting and if that relationship is not in the array don't include it.
 
  To run:
   1. Enter your session id below into the session var
@@ -20,34 +25,47 @@ var request = require('request');
 var jsonfile = require('jsonfile')
 
 // User Variables
-var session = "USYS118C7FFF0F556EADAB94E2FD9257037E_idses-prod04.a.fsglobal.net";
+var session = "USYS10AF2A8DC784A73427B71370F68ACC35_idses-prod02.a.fsglobal.net";
 var start = "KWCJ-RN4";
 // Set to true if you want to save living people
 var living = false;
 // Where will these files reside so we can update relationship and protrait links
-var dest = "https://raw.githubusercontent.com/misbach/familytree/master/people/";
+// var dest = "https://raw.githubusercontent.com/misbach/familytree/master/people/";
+var dest = "https://raw.githubusercontent.com/jdsumsion/familytree/master/people/";
 var generations = "4";
+var type = "array"; // Valid types are: ["array", "tree"]
 
-// Download specific person
-//download("KWCJ-RN4", function(rsp) { console.log(rsp) });
+// -------------------------
+// Download array of persons
+// -------------------------
+if (type == "array") {
+  var pids = ["KWZ3-P71", "KWZ3-PW3", "KW8Q-TD8", "KWJZ-1GK", "K2FG-5ZC", "K23Y-2RH", "KGKN-CLS", "LC5T-J6H", "9HLK-VX9", "LCZ8-136", "93XB-FM6", "LZVM-Y96"];
+  pids.forEach(function(pid) {
+      download(pid, function(rsp) { console.log(rsp) });
+  });
+}
 
+// -------------------------------------
 // Get all ancestors starting from a PID
-var options = {
-  url: "https://familysearch.org/platform/tree/ancestry?generations="+generations+"&person="+start,
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': 'Bearer '+session,
-  }
-};
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    var tree = JSON.parse(body);
-    for (var i = 0; i<tree.persons.length; i++) {
-      download(tree.persons[i].id, function(rsp) { console.log(rsp) });
+// -------------------------------------
+if (type == "tree") {
+  var options = {
+    url: "https://familysearch.org/platform/tree/ancestry?generations="+generations+"&person="+start,
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer '+session,
     }
-  }
-  else { console.log(body) }
-});
+  };
+  request(options, function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var tree = JSON.parse(body);
+      for (var i = 0; i<tree.persons.length; i++) {
+        download(tree.persons[i].id, function(rsp) { console.log(rsp) });
+      }
+    }
+    else { console.log(body) }
+  });
+}
 
 // Download a person
 function download(id, callback) {
