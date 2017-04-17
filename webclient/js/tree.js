@@ -23,14 +23,17 @@ function getTree(url = params.id, node) {
 
 
     // Get Parents
-    var parents = getParents(person.persons[0].display.familiesAsChild[0], person.persons);
+    if (person.persons[0].display.familiesAsChild) {
+	    var parents = getParents(person.persons[0].display.familiesAsChild[0], person.persons);
 
-		// Find current person in json tree (node)
-		var tmpNode = find(node, url);
-    tmpNode._parents.push({id: parents.father.url, name: parents.father.name, _parents: []});
-    tmpNode._parents.push({id: parents.mother.url, name: parents.mother.name, _parents: []});
-		tmpNode.lifespan = person.persons[0].display.lifespan;
-		tmpNode.birthPlace = person.persons[0].display.birthPlace;
+			// Find current person in json tree (node)
+			var tmpNode = find(node, url);
+	    tmpNode._parents.push({id: parents.father.url, name: parents.father.name, _parents: []});
+	    tmpNode._parents.push({id: parents.mother.url, name: parents.mother.name, _parents: []});
+			tmpNode.lifespan = person.persons[0].display.lifespan;
+			tmpNode.birthPlace = person.persons[0].display.birthPlace;
+    }
+
 
 		// Get children of root person only
 		// TODO Get multiple generations of descendants

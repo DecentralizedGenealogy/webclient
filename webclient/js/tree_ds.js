@@ -25,16 +25,16 @@ function setup() {
       svg.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
     })
     // Offset so that first pan and zoom does not jump back to the origin
-    .translate([400, 200]);
+    .translate([300, 400]);
   
   var svg = d3.select(".viewer").append("svg")
     .attr('width', 1000)
-    .attr('height', 500)
+    .attr('height', 800)
     .call(zoom)
     .append('g')
     // Left padding of tree so that the whole root node is on the screen.
     // TODO: find a better way
-    .attr("transform", "translate(400,200)");
+    .attr("transform", "translate(300,400)");
   
   // One tree to display the ancestors
   var ancestorTree = new Tree(svg, 'ancestor', 1);
@@ -246,17 +246,18 @@ Tree.prototype.drawNodes = function(nodes, source) {
     .attr('class', 'name')
     .text(function(d) { return d.name; });
 
-  // Draw the person's name and position it inside the box
+  // Draw the person's lifespan and position it inside the box
   nodeEnter.append("text")
     .attr("dx", -90)
     .attr("dy", 5)
     .attr('class', 'lifespan')
     .text(function(d) { return d.lifespan; });
 
-  // Draw the person's name and position it inside the box
+  // Draw the person's birthPlace
   nodeEnter.append("text")
     .attr("dx", -90)
     .attr("dy", 25)
+    .attr("width", 50)
     .attr('class', 'birth_place')
     .text(function(d) { return d.birthPlace; });
   

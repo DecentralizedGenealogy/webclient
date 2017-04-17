@@ -6,7 +6,7 @@
   <title>Decentralized Distributed Tree</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/person.css">
 </head>
 <body>
@@ -20,7 +20,7 @@
         <!-- Person Box -->
         <div class="person-box">
           <div class="person-vitals">
-            <button type="button" class="edit-btn btn btn-warning btn-xs" data-toggle="modal" data-target="#edit">Edit</button>
+            <button type="button" class="edit-btn btn btn-warning btn-sm" data-toggle="modal" data-target="#edit">Edit</button>
             <img class="portrait">
             <div class="person-name"></div>
             <div class="person-birth-date"></div>
@@ -52,7 +52,7 @@
 
       <!-- Column: node graph -->
       <div class="col-md-6">
-        <h3>One Hop Relatives</h3>
+        <h3 class="one_hop">One Hop Relatives</h3>
         <svg class="graph" width="500" height="500"></svg>
 
         <h3>Maintainer</h3>
@@ -73,43 +73,43 @@
         </div>
         <div class="modal-body">
           <form class="form-horizontal">
-            <div class="form-group">
+            <div class="form-group row">
               <label for="first_name" class="col-sm-3 control-label">Given Name</label>
               <div class="col-sm-9">
                 <input class="form-control" id="first_name">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label for="middle_name" class="col-sm-3 control-label">Middle Name</label>
               <div class="col-sm-9">
                 <input class="form-control" id="middle_name">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label for="surname" class="col-sm-3 control-label">Surname</label>
               <div class="col-sm-9">
                 <input class="form-control" id="surname">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label for="birth_date" class="col-sm-3 control-label">Birth Date</label>
               <div class="col-sm-9">
                 <input class="form-control" id="birth_date">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label for="birth_place" class="col-sm-3 control-label">Birth Place</label>
               <div class="col-sm-9">
                 <input class="form-control" id="birth_place">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label for="death_date" class="col-sm-3 control-label">Death Date</label>
               <div class="col-sm-9">
                 <input class="form-control" id="death_date">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
               <label for="death_place" class="col-sm-3 control-label">Death Place</label>
               <div class="col-sm-9">
                 <input class="form-control" id="death_place">
@@ -125,14 +125,17 @@
     </div>
   </div>
 
-  <script
-    src="https://code.jquery.com/jquery-2.2.4.min.js"
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
     integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
     crossorigin="anonymous">
   </script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
-
   <script src="js/person.js"></script>
-  <script src="js/modal.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+    integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+  crossorigin="anonymous"></script>
 </body>
 </html>

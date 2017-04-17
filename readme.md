@@ -46,7 +46,6 @@ The revolutionary liberation of genealogical data will lead to further advanceme
 
 OR
 
-1. Clone the repo and cd into the `webclient` directory
-2. run: `npm install http-server`
-2. run: `http-server -p 5000`
-3. go to the following URL in your browser: `http://localhost:5000/`
+1. `npm install http-server`
+2. `http-server -p 5000 webclient`
+3. `http://localhost:5000/`
