@@ -224,9 +224,7 @@ Tree.prototype.drawNodes = function(nodes, source) {
     .attr('transform', function(person){
       return 'translate(' + (self.direction * (source.y0 + boxWidth/2)) + ',' + source.x0 + ')';
     })
-    .on('click', function(person){
-      self.togglePerson(person);
-    });
+    .on('click', function(person) { self.togglePerson(person) });
 
   // Draw the rectangle person boxes.
   // Start new boxes with 0 size so that
@@ -239,28 +237,61 @@ Tree.prototype.drawNodes = function(nodes, source) {
       height: 0
     });
 
+  // Add Portrait
+  node.append("image")
+    .attr("xlink:href", function (d) {
+      var portrait = d.id.replace("json", "jpg");
+      return portrait;
+    })
+    .attr("x", -99)
+    .attr("y", -34)
+    .attr("width", 69)
+    .attr("height", 69);
+
   // Draw the person's name and position it inside the box
   nodeEnter.append("text")
-    .attr("dx", 0)
-    .attr("dy", -15)
+    .attr("x", 70)
+    .attr("y", -15)
     .attr('class', 'name')
     .text(function(d) { return d.name; });
 
   // Draw the person's lifespan and position it inside the box
   nodeEnter.append("text")
-    .attr("dx", -90)
+    .attr("dx", -20)
     .attr("dy", 5)
     .attr('class', 'lifespan')
     .text(function(d) { return d.lifespan; });
 
   // Draw the person's birthPlace
   nodeEnter.append("text")
-    .attr("dx", -90)
+    .attr("dx", -20)
     .attr("dy", 25)
     .attr("width", 50)
     .attr('class', 'birth_place')
     .text(function(d) { return d.birthPlace; });
+
+  // Navigate Tree Link
+  nodeEnter.append("a")
+    .attr("xlink:href", function(d) {return "tree.html?id=" + d.id})
+    .append("svg:image")
+      .attr("xlink:href", "images/tree.svg")
+      .attr("width", 16)
+      .attr("height", 16)
+      .attr("x", -80)
+      .attr("y", 40)
+      .attr("fill-opacity", .5);
   
+  // Go to profile view
+  nodeEnter.append("a")
+    .attr("xlink:href", function(d) {return "person.html?id=" + d.id})
+    .append("svg:image")
+      .attr("xlink:href", "images/profile.svg")
+      .attr("width", 16)
+      .attr("height", 16)
+      .attr("x", -100)
+      .attr("y", 40)
+      .attr("fill-opacity", .5);
+
   // Update the position of both old and new nodes
   var nodeUpdate = node.transition()
     .duration(duration)
@@ -317,13 +348,10 @@ Tree.prototype.drawNodes = function(nodes, source) {
 Tree.prototype.togglePerson = function(person) {
   // Don't allow the root to be collapsed because that's
   // silly (it also makes our life easier)
-  if(person === this.root) {
+  if (person === this.root) {
     return;
-  }
-  
-  // Non-root nodes
-  else {
-    if(person.collapsed) {
+  } else {
+    if (person.collapsed) {
       person.collapsed = false;
     } else {
       collapse(person);
