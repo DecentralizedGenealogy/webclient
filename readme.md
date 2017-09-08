@@ -42,7 +42,7 @@ The revolutionary liberation of genealogical data will lead to further advanceme
 * Tree hosting service (gitlab might be a good start)
 
 # To run HTML client
-1. Go here: https://misbach.github.io/DecentralizedDistributedGenealogy/webclient/index.html
+1. Go here: https://decentralizedgenealogy.github.io/webclient/www/
 
 OR
 
