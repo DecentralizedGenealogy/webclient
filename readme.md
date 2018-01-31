@@ -26,14 +26,14 @@ The revolutionary liberation of genealogical data will lead to further advanceme
 
 # Tenets
 - No enforcement of referential integrity. The client could implement a soft version of ref integrity. If you remove a child from a parent, the child may still maintain relationship to parent.
-- No garuentee a relationship link won't become 404.
+- No guarantee a relationship link won't become 404.
 - No central authority or control of the tree.
 - The tree is distributed geographically and authoritatively.
 - Each person or node in the tree is autonomous.
 - tree data is open and available to all.
 - Anyone can suggest (pull request) a change.
 - Everyone has freedom to fork a node if concensus is not met.
-- Combined with IPFS the nodes themselves also become decentralized and distributed.
+- Combined with [IPFS](https://ipfs.io/ "InterPlanetary File System") the nodes themselves also become decentralized and distributed.
 - Un-authenticated reading of tree. (The client could allow authentication for trees such as Ancestry, FamilySearch, etc.)
 
 # Looking for volunteers to create:
